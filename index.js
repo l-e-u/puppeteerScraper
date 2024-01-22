@@ -20,7 +20,75 @@ const getQuotes = async () => {
    // - wait until the dom content is loaded (HTML is ready)
    await page.goto("http://quotes.toscrape.com/", {
       waitUntil: "domcontentloaded"
-   })
+   });
+
+   // Get page data
+
+   // Get one quote from the current page
+   const oneQuote = await page.evaluate(() => {
+      // Fetch the first element with class "quote"
+      const quote = document.querySelector(".quote");
+
+      // Fetch the sub-elements from the previously fetched quote element
+      // Get the displayed text and return it (`.innerText')
+      const text = quote.querySelector(".text").innerText;
+      const author = quote.querySelector(".author").innerText;
+
+      return { text, author };
+   });
+
+   // Get all quotes from the current page
+   const allQuotes = await page.evaluate(() => {
+      // Fetch all elements with the class "quote"
+      const quotes = document.querySelectorAll(".quote");
+
+      // Convert the quotes to an iterable array
+      // For each quote, fetch the text and author
+      return [...quotes].map(quote => {
+         // Fetch the sub-elements from the previously fetched quote element
+         // Get the displayed text and return it ('.innerText)
+         const text = quote.querySelector('.text').innerText;
+         const author = quote.querySelector('.author').innerText;
+
+         return { text, author };
+      });
+   });
+
+   const getQuotes = async () => {
+      return await page.evaluate(() => {
+         // Fetch all elements with the class "quote"
+         const quotes = document.querySelectorAll(".quote");
+
+         // Convert the quotes to an iterable array
+         // For each quote, fetch the text and author
+         return [...quotes].map(quote => {
+            // Fetch the sub-elements from the previously fetched quote element
+            // Get the displayed text and return it ('.innerText)
+            const text = quote.querySelector('.text').innerText;
+            const author = quote.querySelector('.author').innerText;
+
+            return { text, author };
+         });
+      });
+   };
+
+   // Display a quote extracted from the page at that time
+   // console.log(oneQuote);
+
+   // Display all quotes extracted from the page at that time
+   // console.log(allQuotes);
+
+   // Display all quotes extracted form the current page
+   console.log(await getQuotes());
+
+   // Click on the "Next" button to navigate to the next page
+   await page.click(".pager > .next > a");
+
+   // Display all quotes extracted form the current page
+   console.log(await getQuotes());
+
+   // Close the browser
+   await browser.close();
 };
 
 // Start the scraping
