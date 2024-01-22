@@ -10,7 +10,10 @@ const getQuotes = async () => {
    });
 
    // Open a new page
-   const page = await browser.newPage();
+   // const page = await browser.newPage();
+
+   // Use the first open page
+   const [page] = await browser.pages();
 
    // On this new page:
    // - open the "http://quotes.toscrape.com" website
