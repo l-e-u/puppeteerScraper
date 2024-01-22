@@ -24,7 +24,7 @@ const getQuotes = async () => {
 
    // Get page data
 
-   // Get one quote from the current page
+   // Variable stores one quote from the current page
    const oneQuote = await page.evaluate(() => {
       // Fetch the first element with class "quote"
       const quote = document.querySelector(".quote");
@@ -37,7 +37,7 @@ const getQuotes = async () => {
       return { text, author };
    });
 
-   // Get all quotes from the current page
+   // Variable stores all quotes from the current page
    const allQuotes = await page.evaluate(() => {
       // Fetch all elements with the class "quote"
       const quotes = document.querySelectorAll(".quote");
@@ -54,6 +54,7 @@ const getQuotes = async () => {
       });
    });
 
+   // Function gets all the quotes from the current page
    const getQuotes = async () => {
       return await page.evaluate(() => {
          // Fetch all elements with the class "quote"
@@ -72,10 +73,10 @@ const getQuotes = async () => {
       });
    };
 
-   // Display a quote extracted from the page at that time
+   // Display the saved quote extracted from the current page at that time
    // console.log(oneQuote);
 
-   // Display all quotes extracted from the page at that time
+   // Display the saved quotes extracted from the current page at that time
    // console.log(allQuotes);
 
    // Display all quotes extracted form the current page
